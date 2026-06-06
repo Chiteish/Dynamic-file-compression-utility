@@ -1,2 +1,15 @@
-hello huffman coding
-this is a test file for phase 2.
+huffman coding is a prefix-free entropy encoding algorithm used for lossless data compression. 
+huffman coding is a prefix-free entropy encoding algorithm used for lossless data compression. 
+lossless data compression is achieved by assigning shorter binary codes to characters that appear more frequently, and longer binary codes to characters that appear less frequently.
+dynamic file compression dynamically analyzes the byte entropy and the MIME type of a file to select the optimal compression strategy.
+when the file is large and contains repeating text, LZW, GZIP, or LZMA compression will save massive amounts of space.
+huffman coding is a prefix-free entropy encoding algorithm used for lossless data compression. 
+huffman coding is a prefix-free entropy encoding algorithm used for lossless data compression. 
+lossless data compression is achieved by assigning shorter binary codes to characters that appear more frequently, and longer binary codes to characters that appear less frequently.
+dynamic file compression dynamically analyzes the byte entropy and the MIME type of a file to select the optimal compression strategy.
+when the file is large and contains repeating text, LZW, GZIP, or LZMA compression will save massive amounts of space.
+huffman coding is a prefix-free entropy encoding algorithm used for lossless data compression. 
+huffman coding is a prefix-free entropy encoding algorithm used for lossless data compression. 
+lossless data compression is achieved by assigning shorter binary codes to characters that appear more frequently, and longer binary codes to characters that appear less frequently.
+dynamic file compression dynamically analyzes the byte entropy and the MIME type of a file to select the optimal compression strategy.
+when the file is large and contains repeating text, LZW, GZIP, or LZMA compression will save massive amounts of space.
