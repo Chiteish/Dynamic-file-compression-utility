@@ -1,0 +1,2 @@
+hello huffman coding
+this is a test file for phase 2.

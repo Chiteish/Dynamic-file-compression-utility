@@ -1,0 +1,1 @@
+huffman coding is a prefix-free entropy encoding algorithm used for lossless data compression. huffman coding is a prefix-free entropy encoding algorithm used for lossless data compression. huffman coding is a prefix-free entropy encoding algorithm used for lossless data compression.

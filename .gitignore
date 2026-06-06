@@ -1,0 +1,14 @@
+# Ignore compiled Java bytecode classes
+/out/
+/bin/
+*.class
+
+# Ignore temporary files and output caches
+*.tmp
+*.log
+test_input/
+test_output/
+
+# Ignore local AI agent workspaces and system data
+.gemini/
+/brain/
