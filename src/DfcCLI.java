@@ -1,13 +1,17 @@
+import service.Compressor;
 import service.StreamingCompressor;
 import service.StreamingDecompressor;
 import service.ZstdDictionaryTrainer;
 import service.TarZstdCompressor;
 import service.StrategyChooser;
 import service.StrategyConfig;
+import model.HuffmanTree;
 import util.Detector;
 import util.DetectionResult;
+import util.FileManager;
 
 import java.io.IOException;
+import java.util.Map;
 
 /**
  * Unified CLI entry point for the Dynamic File Compression (DFC) utility.
@@ -23,6 +27,9 @@ public class DfcCLI {
 
         try {
             switch (subcommand) {
+                case "codes":
+                    handleCodes(args);
+                    break;
                 case "compress":
                     handleCompress(args);
                     break;
@@ -48,6 +55,38 @@ public class DfcCLI {
             System.err.println("Execution failed: " + e.getMessage());
             e.printStackTrace();
         }
+    }
+
+    private static void handleCodes(String[] args) throws IOException {
+        if (args.length < 2) {
+            System.err.println("Error: Missing parameters. Usage: codes <file_path>");
+            return;
+        }
+        String filePath = args[1];
+        System.out.println("Reading file for Huffman analysis: " + filePath);
+        String content = FileManager.readFile(filePath);
+
+        Compressor comp = new Compressor();
+        Map<Character, Integer> frequencies = comp.buildFrequencyTable(content);
+
+        System.out.println("\n1. Character Frequencies Table:");
+        System.out.println("-----------------------------------------");
+        frequencies.forEach((c, freq) -> {
+            System.out.printf("Character: %-6s | Frequency: %d\n", escapeChar(c), freq);
+        });
+        System.out.println("-----------------------------------------");
+
+        System.out.println("\n2. Building Huffman Tree...");
+        HuffmanTree tree = new HuffmanTree();
+        tree.build(frequencies);
+
+        System.out.println("\n3. Generated Huffman Codes:");
+        System.out.println("-----------------------------------------");
+        Map<Character, String> prefixCodes = tree.getPrefixCodes();
+        prefixCodes.forEach((c, code) -> {
+            System.out.printf("Character: %-6s | Huffman Code: %s\n", escapeChar(c), code);
+        });
+        System.out.println("-----------------------------------------");
     }
 
     private static void handleCompress(String[] args) throws IOException {
@@ -134,6 +173,16 @@ public class DfcCLI {
         new TarZstdCompressor().compressFolder(sourceFolder, destFile, level);
     }
 
+    private static String escapeChar(char c) {
+        switch (c) {
+            case '\n': return "\\n";
+            case '\r': return "\\r";
+            case '\t': return "\\t";
+            case ' ':  return "' '";
+            default:   return String.valueOf(c);
+        }
+    }
+
     private static void printUsage() {
         System.out.println("=========================================");
         System.out.println("     Dynamic File Compression (DFC)      ");
@@ -141,6 +190,8 @@ public class DfcCLI {
         System.out.println("Usage:");
         System.out.println("  java DfcCLI <subcommand> [arguments...]");
         System.out.println("\nSubcommands:");
+        System.out.println("  codes        <file_path>");
+        System.out.println("               Prints the file character frequencies and Huffman codes.");
         System.out.println("  compress     <source_file> <dest_file> [--mode FAST|BALANCED|MAX_COMPRESSION]");
         System.out.println("               Runs detection, chooses strategy, compresses dynamically.");
         System.out.println("  decompress   <dfc_file> <dest_file>");
