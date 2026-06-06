@@ -1,14 +1,11 @@
 package service;
 
-import util.FileManager;
-
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.zip.GZIPOutputStream;
+
 
 /**
  * Implements streaming compression for multiple codecs (GZIP, ZSTD, BROTLI, BZ2, LZMA)
